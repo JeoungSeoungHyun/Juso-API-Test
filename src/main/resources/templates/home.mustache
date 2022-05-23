@@ -13,9 +13,11 @@
     <button onclick="jusoPopup()">주소찾기</button>
     <input id="roadFullAddr" type="text" value=""/>
     <script>
+        let pop;
         function jusoPopup(){
             let jusoUrl = $("#juso-url").val();
-            window.open(jusoUrl,"pop","width=570,height=420");
+            $("#roadFulladdr").val("");
+            pop = window.open(jusoUrl,"pop","width=570,height=420");
         }
 
         async function jusoCheck(){
@@ -23,7 +25,10 @@
             let responseParse = await response.text();
             console.log(responseParse);
 
-            $("#roadFulladdr").val(responseParse);
+            if(responseParse != ""){
+                $("#roadFulladdr").val(responseParse);
+                pop.close();
+            }
         }
         setInterval(jusoCheck, 1000);
     
