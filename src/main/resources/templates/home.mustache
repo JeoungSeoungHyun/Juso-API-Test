@@ -11,12 +11,22 @@
     <input type="hidden" value="{{jusoUrl}}" id="juso-url" />
     <a href="https://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey=devU01TX0FVVEgyMDIyMDUyMzEwNDgzNTExMjYwMDA=&returnUrl=http://localhost:8080/juso/callback&resultType=4">주소찾기 하이퍼링크</a><br/><br/>
     <button onclick="jusoPopup()">주소찾기</button>
-    <input type="text" value=""/>
+    <input id="roadFullAddr" type="text" value=""/>
     <script>
         function jusoPopup(){
             let jusoUrl = $("#juso-url").val();
             window.open(jusoUrl,"pop","width=570,height=420");
         }
+
+        async function jusoCheck(){
+            let response = await fetch("/juso/check");
+            let responseParse = await response.text();
+            console.log(responseParse);
+
+            $("#roadFulladdr").val(responseParse);
+        }
+        setInterval(jusoCheck, 1000);
+    
     </script>
 </body>
 </html>
